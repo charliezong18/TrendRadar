@@ -130,6 +130,7 @@ rss:
     - id: "hacker-news"
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
+      enabled: false                  # 投资场景用不上，先关
 
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
