@@ -1,0 +1,14 @@
+# 运行产物（每天两次生成，且含 Charlie 的关注内容——此仓库是公开 fork）
+output/
+launchd.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# 数据库
+*.db
+
+# macOS
+.DS_Store
