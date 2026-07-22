@@ -21,34 +21,41 @@
 
 # ═══════════ 宏观 ═══════════
 
-/美联储|鲍威尔|加息|降息|利率决议|点阵图|\bFOMC\b|\bFed\b|\bPowell\b/ => 美联储/利率
-
-/通胀|通缩|\bCPI\b|\bPCE\b|非农|失业率|衰退|软着陆|硬着陆/ => 经济数据
-
-/关税|贸易战|出口管制|制裁|脱钩/ => 关税/贸易
-
-/地缘|俄乌|乌克兰|中东|伊朗|以色列|台海|两岸|朝鲜|北约|\bNATO\b|停火|冲突|战争/ => 地缘政治
+/美联储|鲍威尔|加息|降息|利率决议|点阵图|\bFOMC\b|\bFed\b|\bPowell\b|rate cut|rate hike|interest rate|monetary policy|central bank/ => 美联储/利率
 @8
 
-/财报|业绩指引|营收|盈利预期/ => 财报
-@5
+/通胀|通缩|\bCPI\b|\bPCE\b|非农|失业率|衰退|软着陆|硬着陆|inflation|deflation|payrolls|jobs report|unemployment|recession|\bGDP\b/ => 经济数据
+@8
+
+/关税|贸易战|出口管制|制裁|脱钩|tariff|trade war|export control|sanction/ => 关税/贸易
+@6
+
+/地缘|俄乌|乌克兰|中东|伊朗|以色列|台海|两岸|朝鲜|北约|停火|冲突|战争|\bNATO\b|Ukraine|Russia|Iran|Israel|Gaza|Middle East|Taiwan|North Korea|ceasefire|airstrike|geopolit/ => 地缘政治
+@8
+
+/财报|业绩指引|营收|盈利预期|earnings|guidance|quarterly results|profit forecast/ => 财报
+@6
 
 # ═══════════ 大盘与资产 ═══════════
 
-/美股|纳斯达克|纳指|标普|道指|道琼斯|\bNasdaq\b|\bS&P\b/ => 美股大盘
+/美股|纳斯达克|纳指|标普|道指|道琼斯|\bNasdaq\b|\bS&P\b|\bDow\b|Wall Street|stock market/ => 美股大盘
+@6
 
-/比特币|以太坊|加密货币|币圈|稳定币|\bBitcoin\b|\bBTC\b|\bETH\b/ => 加密货币
+/比特币|以太坊|加密货币|币圈|稳定币|\bBitcoin\b|\bBTC\b|\bETH\b|crypto|stablecoin/ => 加密货币
+@5
 
-/黄金|金价/ => 黄金
+/黄金|金价|\bgold\b|bullion/ => 黄金
+@4
 
-/美债|国债收益率|美元指数/ => 债市/美元
+/美债|国债收益率|美元指数|Treasury|bond yield|dollar index|\bDXY\b/ => 债市/美元
+@5
 
 # ═══════════ 个股（按需增删自选） ═══════════
 
-/英伟达|黄仁勋|\bNVIDIA\b|\bNVDA\b|\bCUDA\b/ => 英伟达
-/特斯拉|马斯克|\bTesla\b|\bTSLA\b|\bFSD\b/ => 特斯拉
-/苹果|库克|\bApple\b|\bAAPL\b|\biPhone\b/ => 苹果
-/微软|\bMicrosoft\b|\bMSFT\b|\bAzure\b/ => 微软
+/英伟达|黄仁勋|\bNVIDIA\b|\bNVDA\b|\bCUDA\b|Jensen Huang/ => 英伟达
+/特斯拉|马斯克|\bTesla\b|\bTSLA\b|\bFSD\b|Elon Musk/ => 特斯拉
+/苹果|库克|\bApple\b|\bAAPL\b|\biPhone\b|Tim Cook/ => 苹果
+/微软|\bMicrosoft\b|\bMSFT\b|\bAzure\b|Satya Nadella/ => 微软
 /谷歌|\bGoogle\b|\bAlphabet\b|\bGOOGL?\b|\bGemini\b|\bWaymo\b/ => 谷歌
 /亚马逊|贝索斯|\bAmazon\b|\bAMZN\b|\bAWS\b/ => 亚马逊
 /\bMeta\b|扎克伯格|\bZuckerberg\b/ => Meta
@@ -58,13 +65,15 @@
 
 # ═══════════ 行业主题 ═══════════
 
-/芯片|半导体|光刻机|\bHBM\b|存储芯片/ => 芯片/半导体
+/芯片|半导体|光刻机|\bHBM\b|存储芯片|semiconductor|chipmaker|lithography/ => 芯片/半导体
+@6
 
 [AI]
 /(?<![a-zA-Z])AI(?![a-zA-Z])/
 人工智能
 大模型
+/artificial intelligence|\bLLM\b/
 @8
 
-/机器人|具身智能|人形机器人/ => 机器人
+/机器人|具身智能|人形机器人|\brobot|humanoid/ => 机器人
 @5
