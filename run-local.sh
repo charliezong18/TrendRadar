@@ -34,9 +34,25 @@ if [ $RC -eq 0 ]; then
   .venv/bin/python publish.py
 fi
 
-# 跑成功就把最新报告弹到默认浏览器（固定路径，Charlie 看完自己关）
-if [ $RC -eq 0 ] && [ -f "$HOME/TrendRadar/output/html/latest/current.html" ]; then
-  open "$HOME/TrendRadar/output/html/latest/current.html"
+# 跑成功就把最新报告弹到默认浏览器，Charlie 看完自己关
+# 优先线上 Pages：那边默认宽屏（本地 file:// 的窄版是邮件用的 600px 底样式），手机也能开
+LOCAL_HTML="$HOME/TrendRadar/output/html/latest/current.html"
+PAGES_HTML="${TRENDRADAR_PAGES_DIR:-$HOME/brief-pages}/index.html"
+if [ $RC -eq 0 ]; then
+  OPENED=""
+  # -nt 确认 publish.py 真写了新版；否则线上还是上一期，宁可开本地
+  if [ -n "$TRENDRADAR_PAGE_URL" ] && [ "$PAGES_HTML" -nt "$LOCAL_HTML" ]; then
+    # 等 Pages 部署完（通常 20~60s），不等的话打开的是上一期报告，还看不出来
+    WANT=$(wc -c < "$PAGES_HTML" | tr -d ' ')
+    for _ in $(seq 24); do
+      if [ "$(curl -sfL "$TRENDRADAR_PAGE_URL" | wc -c | tr -d ' ')" = "$WANT" ]; then
+        open "$TRENDRADAR_PAGE_URL"; OPENED=1; break
+      fi
+      sleep 5
+    done
+    [ -z "$OPENED" ] && echo "警告: Pages 120s 内未更新，退回本地文件" >&2
+  fi
+  [ -z "$OPENED" ] && [ -f "$LOCAL_HTML" ] && open "$LOCAL_HTML"
 fi
 
 find output -type f -mtime +7 -delete 2>/dev/null
