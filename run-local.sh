@@ -40,8 +40,12 @@ LOCAL_HTML="$HOME/TrendRadar/output/html/latest/current.html"
 PAGES_HTML="${TRENDRADAR_PAGES_DIR:-$HOME/brief-pages}/index.html"
 if [ $RC -eq 0 ]; then
   OPENED=""
-  # -nt 确认 publish.py 真写了新版；否则线上还是上一期，宁可开本地
-  if [ -n "$TRENDRADAR_PAGE_URL" ] && [ "$PAGES_HTML" -nt "$LOCAL_HTML" ]; then
+  # 确认 publish.py 真写了新版；否则线上还是上一期，宁可开本地。
+  # 不能用 [ -nt ]：bash 的 -nt 只比整秒（zsh 才是纳秒），而 publish.py 写
+  # index.html 只比 current.html 晚零点几秒，同秒内恒判 false，线上分支永不执行。
+  if [ -n "$TRENDRADAR_PAGE_URL" ] && [ -f "$PAGES_HTML" ] && awk \
+      -v a="$(stat -f %Fm "$PAGES_HTML")" -v b="$(stat -f %Fm "$LOCAL_HTML")" \
+      'BEGIN{exit !(a>b)}'; then
     # 等 Pages 部署完（通常 20~60s），不等的话打开的是上一期报告，还看不出来
     WANT=$(wc -c < "$PAGES_HTML" | tr -d ' ')
     for _ in $(seq 24); do
@@ -51,6 +55,9 @@ if [ $RC -eq 0 ]; then
       sleep 5
     done
     [ -z "$OPENED" ] && echo "警告: Pages 120s 内未更新，退回本地文件" >&2
+  else
+    # 闸门不通过时必须出声：上一版就是在这里静默退回本地，查了半天才发现
+    echo "警告: $PAGES_HTML 不比本地报告新（或 PAGE_URL 未配），跳过线上，开本地文件" >&2
   fi
   [ -z "$OPENED" ] && [ -f "$LOCAL_HTML" ] && open "$LOCAL_HTML"
 fi
